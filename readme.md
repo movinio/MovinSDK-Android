@@ -7,6 +7,16 @@ This repository contains everything related to the MovinSDK for Android, which a
 
 Demo
 ----
+To try the MovinSDK you only need to perform the following steps:
+
+* Load the example app in Android Studio
+
+* Get a GoogleMaps apikey and provide it in the google_maps_api.xml values file.
+
+ * A GoogleMaps is needed for the GoogleMaps integration, so the indoor map can be shown on top of Google Maps
+ 
+* In the MapsActivity.java file you have to provide the app with your customer, apikey and mapId. All these values can be retrieved from your Movin Portal.
+
 To try the MovinSDK all you have to do is load the example app in Android Studio. The code speaks for itself.
 In the apps build.gradle is shown how to include the library files in your project.
 
