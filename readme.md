@@ -20,7 +20,7 @@ To try the MovinSDK you only need to perform the following steps:
 To try the MovinSDK all you have to do is load the example app in Android Studio. The code speaks for itself.
 In the apps build.gradle is shown how to include the library files in your project.
 
-The current version of the AndroidSDK is 2.4.1
+The current version of the Android MovinSDK is 2.4.2
 
 ##LICENSE
 Licensed under Creative Commons Attribution-NoDerivs 3.0 Unported
