@@ -109,6 +109,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(map);
         mapFragment.getMapAsync(this);
 
+        // The drawing order of the map and POI's / Text Entities can be changed:
+        mapFragment.setMovinTileLayerZIndex(0); // The Z index of the tile layer, defaults to 0
+        mapFragment.setMovinRendererZIndex(5); // The Z index of POI's and Text Entities, defaults to 5
+
         // Create the floorswitcher
         createFloorSwitcher();
 
@@ -117,7 +121,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //      allowCaching, whether or not the data can be cached or not, in this case we do false, so we will redownload on each app launch
         //      allowSyncing, whether or not the data can be synced after the first time download.
         //      refreshRate, after how many seconds the data should be refreshed. The refreshRate only allows refreshing over WiFi.
-        //      forcedRefreshRate, after how many secons the data should be refreshed, whether or not WiFi is available.
+        //      forcedRefreshRate, after how many seconds the data should be refreshed, whether or not WiFi is available.
         //          A 0 value indicates that the data is never synced over anything other than WiFi
         //      timeoutWithCacheAvailable, after how many seconds the HTTP call is killed if there is a cached version available
         //      timeout, after how many seconds the HTTP call is killed if there is not a cached version available
