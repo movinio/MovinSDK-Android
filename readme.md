@@ -1,4 +1,6 @@
-##MovinSDK-Android
+MovinSDK-Android
+================
+
 This repository contains everything related to the MovinSDK for Android, which are:
 
 * The core MovinSDK library (sdk/MovinSDK-release.aar)
@@ -22,7 +24,8 @@ In the apps build.gradle is shown how to include the library files in your proje
 
 The current version of the Android MovinSDK is 2.4.2
 
-##LICENSE
+LICENCE
+-------
 Licensed under Creative Commons Attribution-NoDerivs 3.0 Unported
 
 THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
