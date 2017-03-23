@@ -24,6 +24,15 @@ In the apps build.gradle is shown how to include the library files in your proje
 
 The current version of the Android MovinSDK is 2.4.2
 
+ProGuard
+--------
+
+If you are using ProGuard in your project, please add the following rules to your configuration:
+
+```
+-keep class com.movin.android.utils.** { *; }
+```
+
 LICENCE
 -------
 Licensed under Creative Commons Attribution-NoDerivs 3.0 Unported
