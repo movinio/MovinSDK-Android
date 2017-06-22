@@ -15,7 +15,7 @@ To try the MovinSDK you only need to perform the following steps:
 
 * Get a GoogleMaps apikey and provide it in the google_maps_api.xml values file.
 
- * A GoogleMaps is needed for the GoogleMaps integration, so the indoor map can be shown on top of Google Maps
+ * GoogleMaps is needed for the GoogleMaps integration, so the indoor map can be shown on top of Google Maps
  
 * In the MapsActivity.java file you have to provide the app with your customer, apikey and mapId. All these values can be retrieved from your Movin Portal.
 

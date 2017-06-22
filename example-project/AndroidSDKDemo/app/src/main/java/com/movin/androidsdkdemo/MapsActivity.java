@@ -27,6 +27,8 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.movin.caching.MovinCacheProtocol;
@@ -39,6 +41,8 @@ import com.movin.maps.MovinTileManifest;
 import com.movin.maps.MovinTileProvider;
 import com.movin.maps.SuccessListener;
 import com.movin.movinsdk_googlemaps.MovinSupportMapFragment;
+import com.movin.positioning.MovinPositioningListener;
+import com.movin.positioning.realtime.MovinPositioningEngine;
 import com.movin.scanner.MovinBeaconScanner;
 import com.movin.scanner.MovinBeaconScannerListener;
 import com.movin.scanner.MovinRangedBeacon;
@@ -98,6 +102,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * A view in which the floorSwitcher will be created
      */
     private TextView floorSwitcherView;
+
+    /**
+     * The marker that is used to show the position of the user
+     */
+    private Marker positionMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -291,19 +300,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //                }
 //
 //                @Override
-//                public void updatedPosition(FloorPosition floorPosition) {
-//                    // Update a marker or something with the new position.
-//                    // Once the device got a position, this will be called 30 times a second to
-//                    // enable a smooth experience.
-//                    double lat = floorPosition.position.lat;
-//                    double lng = floorPosition.position.lng;
-//                    double floor = floorPosition.floor;
+//                public void updatedPosition(final FloorPosition floorPosition) {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            // Update a marker  with the new position.
+//                            // Once the device got a position, this will be called 30 times a second to
+//                            // enable a smooth experience.
+//                            double lat = floorPosition.position.lat;
+//                            double lng = floorPosition.position.lng;
+//                            double floor = floorPosition.floor;
+//                            LatLng latLng = new LatLng(lat, lng);
+//
+//                            if(positionMarker == null) {
+//                                MarkerOptions options = new MarkerOptions().position(latLng);
+//                                positionMarker = mapFragment.getGoogleMap().addMarker(options);
+//                            } else {
+//                                positionMarker.setPosition(latLng);
+//                            }
+//                        }
+//                    });
 //                }
 //
 //                @Override
 //                public void unknownLocation() {
 //                    // The system no longer knows where you are, probably because you are no longer
 //                    // in the area where the fingerprints were made.
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if(positionMarker != null) {
+//                                positionMarker.remove();
+//                                positionMarker = null;
+//                            }
+//                        }
+//                    });
 //                }
 //            });
 //            // We can either start the positioning engine right away, which will take care of initializing
