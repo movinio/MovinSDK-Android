@@ -1,0 +1,10 @@
+com.movin.analytics
+com.movin.caching
+com.movin.geojson
+com.movin.i18n
+com.movin.maps
+com.movin.positioning
+com.movin.positioning.realtime
+com.movin.routing
+com.movin.scanner
+com.movin.sdk
