@@ -22,7 +22,16 @@ To try the MovinSDK you only need to perform the following steps:
 To try the MovinSDK all you have to do is load the example app in Android Studio. The code speaks for itself.
 In the apps build.gradle is shown how to include the library files in your project.
 
-LICENCE
+ProGuard
+--------
+
+If you are using ProGuard in your project, please add the following rules to your configuration:
+
+```
+-keep class com.movin.android.utils.** { *; }
+```
+
+LICENSE
 -------
 Licensed under Creative Commons Attribution-NoDerivs 3.0 Unported
 
