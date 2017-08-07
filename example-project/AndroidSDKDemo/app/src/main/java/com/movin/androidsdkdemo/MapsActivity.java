@@ -27,6 +27,8 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.movin.caching.MovinCacheProtocol;
@@ -39,6 +41,8 @@ import com.movin.maps.MovinTileManifest;
 import com.movin.maps.MovinTileProvider;
 import com.movin.maps.SuccessListener;
 import com.movin.movinsdk_googlemaps.MovinSupportMapFragment;
+import com.movin.positioning.MovinPositioningListener;
+import com.movin.positioning.realtime.MovinPositioningEngine;
 import com.movin.scanner.MovinBeaconScanner;
 import com.movin.scanner.MovinBeaconScannerListener;
 import com.movin.scanner.MovinRangedBeacon;
@@ -99,6 +103,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     private TextView floorSwitcherView;
 
+    /**
+     * The marker that is used to show the position of the user
+     */
+    private Marker positionMarker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +120,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // The drawing order of the map and POI's / Text Entities can be changed:
         mapFragment.setMovinTileLayerZIndex(0); // The Z index of the tile layer, defaults to 0
-        mapFragment.setMovinRendererZIndex(5); // The Z index of POI's and Text Entities, defaults to 5
+        mapFragment.setMovinDefaultLabelZIndex(4); // The Z index of Labels, defaults to 4
+        mapFragment.setMovinDefaultMarkerZIndex(5); // The Z index of POI's, defaults to 5
 
         // Create the floorswitcher
         createFloorSwitcher();
@@ -290,19 +300,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //                }
 //
 //                @Override
-//                public void updatedPosition(FloorPosition floorPosition) {
-//                    // Update a marker or something with the new position.
-//                    // Once the device got a position, this will be called 30 times a second to
-//                    // enable a smooth experience.
-//                    double lat = floorPosition.position.lat;
-//                    double lng = floorPosition.position.lng;
-//                    double floor = floorPosition.floor;
+//                public void updatedPosition(final FloorPosition floorPosition) {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            // Update a marker  with the new position.
+//                            // Once the device got a position, this will be called 30 times a second to
+//                            // enable a smooth experience.
+//                            double lat = floorPosition.position.lat;
+//                            double lng = floorPosition.position.lng;
+//                            double floor = floorPosition.floor;
+//                            LatLng latLng = new LatLng(lat, lng);
+//
+//                            if(positionMarker == null) {
+//                                MarkerOptions options = new MarkerOptions().position(latLng);
+//                                positionMarker = mapFragment.getGoogleMap().addMarker(options);
+//                            } else {
+//                                positionMarker.setPosition(latLng);
+//                            }
+//                        }
+//                    });
 //                }
 //
 //                @Override
 //                public void unknownLocation() {
 //                    // The system no longer knows where you are, probably because you are no longer
 //                    // in the area where the fingerprints were made.
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if(positionMarker != null) {
+//                                positionMarker.remove();
+//                                positionMarker = null;
+//                            }
+//                        }
+//                    });
 //                }
 //            });
 //            // We can either start the positioning engine right away, which will take care of initializing
@@ -502,7 +534,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         // Otherwise just check if the scanned beacon is known (thus we can find in which room it is placed).
-        return movinRangedBeacon.getBeacon() != null;
+        return movinRangedBeacon.getBeacon() != null && movinRangedBeacon.getBeacon().getPosition() != null;
         // NOTE: a MovinRangedBeacon is a beacon it has actually seen in its vicinity. Only if the system
         // actually recognizes this beacon as one of our own (so it can be matched with the beacons stored
         // in the Movin portal), the actual MovinBeacon will be set, and obtainable through getBeacon().
